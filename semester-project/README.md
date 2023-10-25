@@ -79,9 +79,9 @@ Props je kratica za properties i koristi se za prijenos podataka iz jedne kompon
 
 Krenimo s radom!
 
-### Korak 1: Stvaranje `blog/[pageId]` stranice
+### Korak 1: Stvaranje `blog/[postId]` stranice
 
-U `/blog` folderu stvaramo novi podfolder `[pageId]` i u njemu `page.tsx` datoteku. U `page.tsx` datoteku kopiramo sljedeći kod:
+U `/blog` folderu stvaramo novi podfolder `[postId]` i u njemu `page.tsx` datoteku. U `page.tsx` datoteku kopiramo sljedeći kod:
 
 ```tsx
 interface Params {
