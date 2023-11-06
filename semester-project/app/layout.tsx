@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import {
-  Roboto,
-  Roboto_Condensed,
-  Playfair_Display,
-} from "next/font/google";
-import "./globals.css";
-import Link from "next/link";
+import { Roboto, Roboto_Condensed, Playfair_Display } from "next/font/google";
 import clsx from "clsx";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import "./globals.css";
 
 const roboto = Roboto({
   weight: ["400"],
@@ -55,16 +52,9 @@ export default function RootLayout({
           playfairDisplay.variable
         )}
       >
-        <nav className="flex items-center justify-center p-4">
-          <ul className="flex gap-8">
-            {Object.entries(pages).map(([name, path]) => (
-              <li key={name}>
-                <Link href={path}>{name}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
