@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 // Get this info from some external source (e.g. CMS)
-const pages = {
+const pages: Record<string, `/${string}`> = {
   home: "/",
   showcase: "/showcase",
   blog: "/blog",
@@ -52,7 +52,7 @@ export default function RootLayout({
           playfairDisplay.variable
         )}
       >
-        <Navbar />
+        <Navbar pages={pages} />
         {children}
         <Footer />
       </body>
