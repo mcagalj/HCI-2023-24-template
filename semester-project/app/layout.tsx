@@ -1,7 +1,36 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Inter } from "next/font/google";
+import {
+  Roboto,
+  Roboto_Condensed,
+  Playfair_Display,
+} from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import clsx from "clsx";
+
+const roboto = Roboto({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-roboto",
+});
+const roboto_condensed = Roboto_Condensed({
+  weight: ["300", "700"],
+  subsets: ["latin"],
+  variable: "--font-roboto-condensed",
+});
+const playfairDisplay = Playfair_Display({
+  weight: ["400", "800"],
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
+
+export const metadata: Metadata = {
+  title: {
+    template: "Lab project | %s",
+    default: "Lab project",
+  },
+  description: "Next.js lab project",
+};
 
 // Get this info from some external source (e.g. CMS)
 const pages = {
@@ -12,13 +41,6 @@ const pages = {
   contact: "/contact",
 };
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Next.js lab project",
-  description: "Next.js lab project",
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -26,7 +48,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={clsx(
+          roboto.variable,
+          roboto_condensed.variable,
+          playfairDisplay.variable
+        )}
+      >
         <nav className="flex items-center justify-center p-4">
           <ul className="flex gap-8">
             {Object.entries(pages).map(([name, path]) => (
