@@ -1,10 +1,10 @@
 "use client";
 
-import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
 import Logo from "./Logo";
+import { cn } from "@/lib/utils";
 
 interface NavbarProps {
   // Record of string keys and string values where each value is a path starting with a slash
@@ -26,7 +26,7 @@ const Navbar: FC<NavbarProps> = ({ pages }) => {
             <li key={name}>
               <Link href={path}>
                 <span
-                  className={clsx(baseClass, {
+                  className={cn(baseClass, {
                     "bg-brand-purple-700 text-brand-purple-100 pointer-events-none":
                       path === pathName,
                   })}
