@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
+import Logo from "./Logo";
 
 interface NavbarProps {
   // Record of string keys and string values where each value is a path starting with a slash
@@ -17,24 +18,27 @@ const Navbar: FC<NavbarProps> = ({ pages }) => {
   const pathName = usePathname();
 
   return (
-    <nav className="flex items-center justify-center p-4">
-      <ul className="flex gap-2">
-        {Object.entries(pages).map(([name, path]) => (
-          <li key={name}>
-            <Link href={path}>
-              <span
-                className={clsx(baseClass, {
-                  "bg-brand-purple-700 text-brand-purple-100 pointer-events-none":
-                    path === pathName,
-                })}
-              >
-                {name}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <section className="container flex items-center justify-between mx-auto">
+      <Logo />
+      <nav className="flex items-center justify-center p-4">
+        <ul className="flex gap-2">
+          {Object.entries(pages).map(([name, path]) => (
+            <li key={name}>
+              <Link href={path}>
+                <span
+                  className={clsx(baseClass, {
+                    "bg-brand-purple-700 text-brand-purple-100 pointer-events-none":
+                      path === pathName,
+                  })}
+                >
+                  {name}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </section>
   );
 };
 
