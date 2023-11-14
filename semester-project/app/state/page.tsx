@@ -48,6 +48,9 @@ const StateDemo: FC = () => {
   const [shouldHideStudents, setShouldHideStudents] = useState(false);
   const [students, setStudents] = useState(studentsConstArray);
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const handleToggleClick = () => {
     setShouldHideStudents(!shouldHideStudents);
   };
@@ -55,15 +58,13 @@ const StateDemo: FC = () => {
   const handleAddStudentClick = () => {
     const newStudent = {
       id: students.length + 1,
-      name: "Ivo",
-      lastName: "Ivic",
-      // random image from unsplash
-      imgSrc:
-        "https://unsplash.com/photos/MTZTGvDsHFY/download?force=true&w=500",
+      name: firstName,
+      lastName: lastName,
+      imgSrc: `https://source.unsplash.com/300x300/?selfie&sig=${
+        students.length + 1
+      }`,
     };
-
     setStudents([...students, newStudent]);
-    // setStudents((prevStudents) => [...prevStudents, newStudent]);
   };
 
   return (
@@ -85,11 +86,13 @@ const StateDemo: FC = () => {
           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mt-4"
           type="text"
           placeholder="Name"
+          onChange={(e) => setFirstName(e.target.value)}
         />
         <input
           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mt-4"
           type="text"
           placeholder="Last name"
+          onChange={(e) => setLastName(e.target.value)}
         />
         <button
           onClick={handleAddStudentClick}
