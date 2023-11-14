@@ -1,3 +1,4 @@
+"use client";
 import React, { FC } from "react";
 import Image from "next/image";
 
@@ -44,6 +45,19 @@ const Student: FC<StudentProps> = ({ name, lastName, imgSrc }) => {
 };
 
 const StateDemo: FC = () => {
+  let shouldHideStudents = false;
+
+  const handleToggleClick = () => {
+    shouldHideStudents = !shouldHideStudents;
+    console.log({
+      shouldHideStudents,
+    });
+  };
+
+  if (shouldHideStudents) {
+    return <p>Sorry! Studenti spavajau 😴</p>;
+  }
+
   return (
     <main className="py-8">
       <h1 className="text-center mt-5 mb-5 font-bold text-4xl underline">
@@ -69,7 +83,10 @@ const StateDemo: FC = () => {
           Submit
         </button>
       </section>
-      <button className="block mx-auto cursor-pointer bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+      <button
+        onClick={handleToggleClick}
+        className="block mx-auto cursor-pointer bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+      >
         Toggle
       </button>
     </main>
