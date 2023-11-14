@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Image from "next/image";
 
 interface StudentProps {
@@ -45,29 +45,41 @@ const Student: FC<StudentProps> = ({ name, lastName, imgSrc }) => {
 };
 
 const StateDemo: FC = () => {
-  let shouldHideStudents = false;
+  const [shouldHideStudents, setShouldHideStudents] = useState(false);
+  const [students, setStudents] = useState(studentsConstArray);
 
   const handleToggleClick = () => {
-    shouldHideStudents = !shouldHideStudents;
-    console.log({
-      shouldHideStudents,
-    });
+    setShouldHideStudents(!shouldHideStudents);
   };
 
-  if (shouldHideStudents) {
-    return <p>Sorry! Studenti spavajau 😴</p>;
-  }
+  const handleAddStudentClick = () => {
+    const newStudent = {
+      id: students.length + 1,
+      name: "Ivo",
+      lastName: "Ivic",
+      // random image from unsplash
+      imgSrc:
+        "https://unsplash.com/photos/MTZTGvDsHFY/download?force=true&w=500",
+    };
+
+    setStudents([...students, newStudent]);
+    // setStudents((prevStudents) => [...prevStudents, newStudent]);
+  };
 
   return (
     <main className="py-8">
       <h1 className="text-center mt-5 mb-5 font-bold text-4xl underline">
         Welcome to state demo!
       </h1>
-      <ul className="flex flex-col items-center justify-around">
-        {studentsConstArray.map((el) => (
-          <Student key={el.id} {...el} />
-        ))}
-      </ul>
+      {shouldHideStudents ? (
+        <p className="text-center">Sorry! Studenti spavajau 😴</p>
+      ) : (
+        <ul className="flex flex-col items-center justify-around">
+          {students.map((el) => (
+            <Student key={el.id} {...el} />
+          ))}
+        </ul>
+      )}
       <section className="flex flex-col w-64 justify-center items-center my-0 mx-auto border-gray-500">
         <input
           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mt-4"
@@ -79,7 +91,10 @@ const StateDemo: FC = () => {
           type="text"
           placeholder="Last name"
         />
-        <button className="my-5 cursor-pointer bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+        <button
+          onClick={handleAddStudentClick}
+          className="my-5 cursor-pointer bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        >
           Submit
         </button>
       </section>
