@@ -5,7 +5,7 @@ interface StudentProps {
   id: number;
   name: string;
   lastName: string;
-  // imgSrc: string;
+  imgSrc: string;
 }
 
 const studentsConstArray = [
@@ -13,17 +13,17 @@ const studentsConstArray = [
     id: 1,
     name: "Mate",
     lastName: "Matic",
-    // imgSrc: "https://unsplash.com/photos/MTZTGvDsHFY/download?force=true&w=500",
+    imgSrc: "https://unsplash.com/photos/MTZTGvDsHFY/download?force=true&w=500",
   },
   {
     id: 2,
     name: "Ana",
     lastName: "Jurić",
-    // imgSrc: "https://unsplash.com/photos/rDEOVtE7vOs/download?force=true&w=500",
+    imgSrc: "https://unsplash.com/photos/rDEOVtE7vOs/download?force=true&w=500",
   },
 ];
 
-const Student: FC<StudentProps> = ({ name, lastName }) => {
+const Student: FC<StudentProps> = ({ name, lastName, imgSrc }) => {
   return (
     <li className="flex flex-row relative items-center bg-blue-200 mt-2 p-2 rounded-full">
       <section className="mr-5 w-24 mt-5 mb-5 flex-row justify-between flex items-center">
@@ -32,7 +32,7 @@ const Student: FC<StudentProps> = ({ name, lastName }) => {
       </section>
       <div className="w-[65px] h-[65px] relative">
         <Image
-          src=""
+          src={imgSrc}
           alt="profile image"
           fill={true}
           objectFit="cover"
