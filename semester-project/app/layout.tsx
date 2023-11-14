@@ -6,7 +6,7 @@ import {
   Roboto_Condensed,
   Playfair_Display,
 } from "next/font/google";
-import NavBar from "@/components/Navbar";
+import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import "./globals.css";
 

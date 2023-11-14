@@ -35,12 +35,18 @@ const testimonials: TestimonialCardProps[] = [
 ];
 
 const TestimonialsSection = () => (
-  <section className="container flex flex-col gap-20 items-center">
-    <div className="text-center mt-4 whitespace-nowrap">
-      <h1 className="font-roboto-condensed text-3xl font-extrabold text-brand-purple-900">
+  <section className="container flex flex-col gap-10 lg:gap-20 items-center">
+    <div className="text-center mt-4">
+      <h1 className="sm:hidden font-roboto-condensed text-3xl font-extrabold text-brand-purple-900">
+        Our Customers Stories
+      </h1>
+      <h1 className="hidden sm:block font-roboto-condensed text-3xl font-extrabold text-brand-purple-900">
         What our Customers are Saying
       </h1>
-      <h4 className="font-roboto text-xl text-brand-purple-400">
+      <h4 className="sm:hidden font-roboto text-xl text-brand-purple-400">
+        Check These Case Studies
+      </h4>
+      <h4 className="hidden sm:block font-roboto text-xl text-brand-purple-400">
         Read Case Studies of our Happy Customers
       </h4>
     </div>
@@ -49,7 +55,11 @@ const TestimonialsSection = () => (
         <TestimonialCard key={testimonial.title} {...testimonial} />
       ))}
     </div>
-    <Button orange className="mb-10">
+    <Button
+      orange
+      className="mb-10 text-base xl:text-lg xl:px-8"
+      iconClassName="xl:w-4 xl:h-4"
+    >
       View showcases
     </Button>
   </section>

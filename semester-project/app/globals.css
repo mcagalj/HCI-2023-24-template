@@ -10,6 +10,6 @@
 
 @layer components {
   .container {
-    @apply mx-auto px-56 py-10 max-w-screen-2xl;
+     @apply mx-auto px-5 lg:px-20 xl:px-40 py-5 xl:py-10  max-w-screen-2xl;
   }
 }

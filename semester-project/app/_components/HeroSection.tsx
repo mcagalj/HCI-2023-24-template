@@ -14,16 +14,15 @@ const images: HeroImageObject[] = [
 ];
 
 const HeroSection = () => (
-  <section className="container flex justify-between items-center gap-10 w-screen">
-    {/*                                                     v (m-auto lg:m-0)    ^mb-8    */}
-    <div className="flex flex-col justify-start gap-5 max-w-xl">
-      {/* font-playfair text-5xl text-center lg:text-left xl:text-6xl font-extrabold text-brand-purple-900 whitespace-break-spaces */}
-      <h1 className="font-playfair text-6xl font-extrabold text-brand-purple-900 whitespace-break-spaces">
-        Where Vision Meets Innovation
+  <section className="container flex justify-between items-center gap-10 w-screen mb-8">
+    <div className="flex flex-col justify-start gap-5 max-w-xl m-auto lg:m-0">
+      <h1 className="font-playfair text-5xl text-center lg:text-left xl:text-6xl font-extrabold text-brand-purple-900 whitespace-break-spaces">
+        Where Vision <br />
+        Meets Innovation
       </h1>
-      <p className="font-roboto text-lg whitespace-break-spaces">
+      <p className="font-roboto text-base text-center lg:text-left xl:text-lg whitespace-break-spaces">
         Welcome to{" "}
-        <span className="font-roboto-condensed font-bold text-xl text-brand-purple-900 whitespace-nowrap">
+        <span className="font-roboto-condensed font-bold text-base xl:text-xl text-brand-purple-900 whitespace-nowrap">
           design matters.
         </span>
         , where creativity knows no bounds and innovation is our guiding
@@ -31,17 +30,24 @@ const HeroSection = () => (
         thinking to transform ordinary concepts into extraordinary experiences.
       </p>
 
-      <div className="flex gap-5 mt-4">
-        <Button orange className="text-lg">
+      <div className="flex gap-5 mt-4 self-center lg:self-start">
+        <Button
+          orange
+          className="text-base xl:text-lg xl:px-8"
+          iconClassName="xl:w-4 xl:h-4"
+        >
           Book a meeting
         </Button>
-        <Button purple className="text-lg">
+        <Button
+          purple
+          className="hidden sm:flex text-base xl:text-lg xl:px-8"
+          iconClassName="xl:w-4 xl:h-4"
+        >
           Learn more
         </Button>
       </div>
     </div>
-    {/* hidden lg:block flex-shrink-0 */}
-    <div className="flex-shrink-0">
+    <div className="hidden lg:block flex-shrink-0">
       <HeroImageGrid images={images} />
     </div>
   </section>
