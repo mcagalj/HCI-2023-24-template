@@ -68,6 +68,8 @@ const StateDemo: FC = () => {
   };
 
   const handleAddStudentClick = () => {
+    if (state.firstName === "" || state.lastName === "") return;
+
     const newStudent = {
       id: state.students.length + 1,
       name: state.firstName,
@@ -83,6 +85,34 @@ const StateDemo: FC = () => {
     }));
   };
 
+  const [filterValue, setFilterValue] = useState("");
+  const [showShowClearButton, setShowClearButton] = useState(false);
+  const handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    const { value } = event.target;
+    setFilterValue(value);
+    if (value !== "") {
+      setShowClearButton(true);
+    } else {
+      setShowClearButton(false);
+    }
+  };
+  const handleClearFilter = () => {
+    setFilterValue("");
+    setShowClearButton(false);
+  };
+
+  const students =
+    filterValue == ""
+      ? state.students
+      : state.students.filter((student) => {
+          return (
+            student.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+            student.lastName.toLowerCase().includes(filterValue.toLowerCase())
+          );
+        });
+
   return (
     <main className="py-8">
       <h1 className="text-center mt-5 mb-5 font-bold text-4xl underline">
@@ -92,7 +122,7 @@ const StateDemo: FC = () => {
         <p className="text-center">Sorry! Studenti spavajau 😴</p>
       ) : (
         <ul className="flex flex-col items-center justify-around">
-          {state.students.map((el) => (
+          {students.map((el) => (
             <Student key={el.id} {...el} />
           ))}
         </ul>
@@ -126,6 +156,21 @@ const StateDemo: FC = () => {
         className="block mx-auto cursor-pointer bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
       >
         Toggle
+      </button>
+      <input
+        value={filterValue}
+        onChange={handleFilterChange}
+        className="mx-auto block my-4 appearance-none bg-gray-200 text-gray-700 border rounded py-3 px-4 focus:outline-none focus:bg-white focus:border-blue-500 mt-4"
+        type="text"
+        placeholder="Filter input"
+      />
+      <button
+        onClick={handleClearFilter}
+        className={`mx-auto block rounded-md border-2 border-red-400 text-red-500 py-0.5 px-4 ${
+          showShowClearButton ? "visible" : "invisible"
+        }`}
+      >
+        Clear
       </button>
     </main>
   );
