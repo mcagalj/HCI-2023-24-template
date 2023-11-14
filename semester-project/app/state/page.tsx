@@ -1,6 +1,7 @@
 "use client";
 import React, { FC, useState } from "react";
 import Image from "next/image";
+import { type } from "os";
 
 interface StudentProps {
   id: number;
@@ -44,27 +45,42 @@ const Student: FC<StudentProps> = ({ name, lastName, imgSrc }) => {
   );
 };
 
-const StateDemo: FC = () => {
-  const [shouldHideStudents, setShouldHideStudents] = useState(false);
-  const [students, setStudents] = useState(studentsConstArray);
+type State = {
+  firstName: string;
+  lastName: string;
+  students: StudentProps[];
+  shouldHideStudents: boolean;
+};
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+const StateDemo: FC = () => {
+  const [state, setState] = useState<State>({
+    firstName: "",
+    lastName: "",
+    students: studentsConstArray,
+    shouldHideStudents: false,
+  });
 
   const handleToggleClick = () => {
-    setShouldHideStudents(!shouldHideStudents);
+    setState((state) => ({
+      ...state,
+      shouldHideStudents: !state.shouldHideStudents,
+    }));
   };
 
   const handleAddStudentClick = () => {
     const newStudent = {
-      id: students.length + 1,
-      name: firstName,
-      lastName: lastName,
-      imgSrc: `https://source.unsplash.com/300x300/?selfie&sig=${
-        students.length + 1
+      id: state.students.length + 1,
+      name: state.firstName,
+      lastName: state.lastName,
+      imgSrc: `https://source.unsplash.com/500x500?couple-selfie&sig=${
+        state.students.length + 1
       }`,
     };
-    setStudents([...students, newStudent]);
+
+    setState((state) => ({
+      ...state,
+      students: [...state.students, newStudent],
+    }));
   };
 
   return (
@@ -72,11 +88,11 @@ const StateDemo: FC = () => {
       <h1 className="text-center mt-5 mb-5 font-bold text-4xl underline">
         Welcome to state demo!
       </h1>
-      {shouldHideStudents ? (
+      {state.shouldHideStudents ? (
         <p className="text-center">Sorry! Studenti spavajau 😴</p>
       ) : (
         <ul className="flex flex-col items-center justify-around">
-          {students.map((el) => (
+          {state.students.map((el) => (
             <Student key={el.id} {...el} />
           ))}
         </ul>
@@ -86,13 +102,17 @@ const StateDemo: FC = () => {
           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mt-4"
           type="text"
           placeholder="Name"
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) =>
+            setState((state) => ({ ...state, firstName: e.target.value }))
+          }
         />
         <input
           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mt-4"
           type="text"
           placeholder="Last name"
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) =>
+            setState((state) => ({ ...state, lastName: e.target.value }))
+          }
         />
         <button
           onClick={handleAddStudentClick}
