@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Roboto, Roboto_Condensed, Playfair_Display } from "next/font/google";
 import clsx from "clsx";
-import Navbar from "@/components/Navbar";
+import {
+  Inter,
+  Roboto,
+  Roboto_Condensed,
+  Playfair_Display,
+} from "next/font/google";
+import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const roboto = Roboto({
   weight: ["400"],
   subsets: ["latin"],
@@ -29,30 +35,22 @@ export const metadata: Metadata = {
   description: "Next.js lab project",
 };
 
-// Get this info from some external source (e.g. CMS)
-const pages: Record<string, `/${string}`> = {
-  home: "/",
-  showcase: "/showcase",
-  blog: "/blog",
-  about: "/about",
-  contact: "/contact",
-};
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={clsx(
-          roboto.variable,
-          roboto_condensed.variable,
-          playfairDisplay.variable
-        )}
-      >
-        <Navbar pages={pages} />
+    <html
+      lang="en"
+      className={clsx(
+        roboto.variable,
+        roboto_condensed.variable,
+        playfairDisplay.variable
+      )}
+    >
+      <body className={inter.className}>
+        <NavBar />
         {children}
         <Footer />
       </body>

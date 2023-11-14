@@ -1,14 +1,10 @@
-import Image, { StaticImageData } from "next/image";
+import HeroImageGrid, { HeroImageObject } from "./HeroImageGrid";
+import Button from "@/components/Button";
 
 import heroImage1 from "@/public/hero/pierre-chatel-innocenti-pxoZSTdAzeU-unsplash.jpg";
 import heroImage2 from "@/public/hero/alex-padurariu-ZR48YvUpk04-unsplash.jpg";
-import heroImage4 from "@/public/hero/yoann-siloine-dyaxQ-aoGWY-unsplash.jpg";
 import heroImage3 from "@/public/hero/matt-le-SJSpo9hQf7s-unsplash.jpg";
-
-type HeroImageObject = {
-  image: StaticImageData;
-  borderRadius: string;
-};
+import heroImage4 from "@/public/hero/yoann-siloine-dyaxQ-aoGWY-unsplash.jpg";
 
 const images: HeroImageObject[] = [
   { image: heroImage1, borderRadius: "20% 0 0 0" },
@@ -19,7 +15,9 @@ const images: HeroImageObject[] = [
 
 const HeroSection = () => (
   <section className="container flex justify-between items-center gap-10 w-screen">
+    {/*                                                     v (m-auto lg:m-0)    ^mb-8    */}
     <div className="flex flex-col justify-start gap-5 max-w-xl">
+      {/* font-playfair text-5xl text-center lg:text-left xl:text-6xl font-extrabold text-brand-purple-900 whitespace-break-spaces */}
       <h1 className="font-playfair text-6xl font-extrabold text-brand-purple-900 whitespace-break-spaces">
         Where Vision Meets Innovation
       </h1>
@@ -32,23 +30,19 @@ const HeroSection = () => (
         principle. At our design studio, we believe in the power of visionary
         thinking to transform ordinary concepts into extraordinary experiences.
       </p>
-    </div>
-    <div className="flex-shrink-0">
-      <div className="grid grid-cols-2 grid-rows-2 gap-2 grow">
-        {images.map((imageObj, index) => (
-          <div key={index} className="relative h-52 w-52">
-            <Image
-              src={imageObj.image}
-              alt={`Hero image ${index + 1}`}
-              fill
-              style={{
-                objectFit: "cover",
-                borderRadius: `${imageObj.borderRadius}`,
-              }}
-            />
-          </div>
-        ))}
+
+      <div className="flex gap-5 mt-4">
+        <Button orange className="text-lg">
+          Book a meeting
+        </Button>
+        <Button purple className="text-lg">
+          Learn more
+        </Button>
       </div>
+    </div>
+    {/* hidden lg:block flex-shrink-0 */}
+    <div className="flex-shrink-0">
+      <HeroImageGrid images={images} />
     </div>
   </section>
 );

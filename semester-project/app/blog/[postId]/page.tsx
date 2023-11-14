@@ -1,15 +1,14 @@
-import { Post } from "../page";
+import { getPost } from "@/app/blog/lib/api";
 
-interface Params {
+type Params = {
   postId: string;
-}
-
-const BASE_API_URL = "https://jsonplaceholder.typicode.com";
-
-const getPost = async (id: string): Promise<Post> => {
-  const data = await fetch(`${BASE_API_URL}/posts/${id}`);
-  return data.json();
 };
+
+export async function generateMetadata({ params }: { params: Params }) {
+  return {
+    title: `Post ${params.postId}`,
+  };
+}
 
 export default async function BlogPost({ params }: { params: Params }) {
   const post = await getPost(params.postId);

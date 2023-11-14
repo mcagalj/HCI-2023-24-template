@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "Showcase",
+};
+
 export default function Showcase() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
