@@ -9,8 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^15.19.0",
     "@heroicons/react": "^2.0.18",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@tailwindcss/typography": "^0.5.10",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "contentful": "^10.6.13",
+    "highlight.js": "^11.9.0",
     "next": "13.5.5",
     "react": "^18",
     "react-dom": "^18",
