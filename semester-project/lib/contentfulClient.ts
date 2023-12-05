@@ -95,8 +95,37 @@ const getAllProducts = async (): Promise<TypeProductListItem[]> => {
   }
 };
 
+const getAllCategories = async (): Promise<TypeCategory[]> => {
+  try {
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+      },
+      body: JSON.stringify({ query: getAllCategoriesQuery }),
+    });
+    const body = (await response.json()) as {
+      data: CategoryCollectionResponse;
+    };
+
+    const categories: TypeCategory[] = body.data.categoryCollection.items.map(
+      (item) => ({
+        label: item.label,
+      })
+    );
+
+    return categories;
+  } catch (error) {
+    console.log(error);
+
+    return [];
+  }
+};
+
 const contentfulService = {
   getAllProducts,
+  getAllCategories,
 };
 
 export default contentfulService;
