@@ -58,3 +58,45 @@ interface CategoryCollectionResponse {
     items: TypeCategory[];
   };
 }
+
+const baseUrl = `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}/environments/master`;
+
+const getAllProducts = async (): Promise<TypeProductListItem[]> => {
+  try {
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+      },
+      body: JSON.stringify({ query: gqlAllProductsQuery }),
+    });
+
+    // Get the response as JSON, cast as ProductCollectionResponse
+    const body = (await response.json()) as {
+      data: ProductCollectionResponse;
+    };
+
+    // Map the response to the format we want
+    const products: TypeProductListItem[] =
+      body.data.productCollection.items.map((item) => ({
+        id: item.sys.id,
+        name: item.name,
+        description: item.description,
+        heroImage: item.heroImage.url,
+        categories: item.categoriesCollection.items.map((category) => category),
+      }));
+
+    return products;
+  } catch (error) {
+    console.log(error);
+
+    return [];
+  }
+};
+
+const contentfulService = {
+  getAllProducts,
+};
+
+export default contentfulService;
