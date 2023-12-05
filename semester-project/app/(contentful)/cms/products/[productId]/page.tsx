@@ -14,7 +14,7 @@ import python from "highlight.js/lib/languages/python";
 import "highlight.js/styles/github-dark.css";
 import { RichTextLinksFragment } from "@/marketing-web/app/gql/graphql";
 import { HeroImage } from "../page";
-import { products } from "../productList";
+import contentfulService from "@/lib/contentfulClient";
 
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("python", python);
@@ -67,9 +67,7 @@ type Params = {
 };
 
 const ProductPage = async ({ params }: { params: Params }) => {
-  const product = products.find(
-    (product) => product.id === Number(params.productId)
-  );
+  const product = await contentfulService.getProductById(params.productId);
 
   if (!product) {
     return <div>Product not found</div>;

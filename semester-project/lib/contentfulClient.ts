@@ -1,5 +1,8 @@
 import { TypeCategory } from "@/app/(contentful)/types/TypeCategory";
-import { TypeProductListItem } from "@/app/(contentful)/types/TypeProduct";
+import {
+  TypeProductDetailItem,
+  TypeProductListItem,
+} from "@/app/(contentful)/types/TypeProduct";
 
 const gqlAllProductsQuery = `query ProductList {
   productCollection {
@@ -30,6 +33,30 @@ const getAllCategoriesQuery = `query {
     }
   }`;
 
+const gqlProductByIdQuery = `query GetProductById($productId: String!) {
+  product(id: $productId) {
+    name
+    price
+    description
+    currencyCode
+    listed
+    heroImage {
+      url
+    }
+    categoriesCollection {
+      items {
+        label
+      }
+    }
+    imagesCollection {
+      items {
+        url
+      }
+    }
+  }
+}
+`;
+
 interface ProductCollectionResponse {
   productCollection: {
     items: ProductItem[];
@@ -56,6 +83,36 @@ interface ProductItem {
 interface CategoryCollectionResponse {
   categoryCollection: {
     items: TypeCategory[];
+  };
+}
+
+interface DetailProductResponse {
+  product: {
+    name: string;
+    imagesCollection: {
+      items: {
+        url: string;
+      }[];
+    };
+    richTextDescription: {
+      json: any;
+      links: any;
+    };
+    price: number;
+    currencyCode: "CHF" | "EUR" | "GBP" | "USD";
+    listed: boolean;
+    categories: {
+      label: TypeCategory["label"];
+    }[];
+    description: string;
+    heroImage: {
+      url: string;
+    };
+    categoriesCollection: {
+      items: {
+        label: TypeCategory["label"];
+      }[];
+    };
   };
 }
 
@@ -123,9 +180,52 @@ const getAllCategories = async (): Promise<TypeCategory[]> => {
   }
 };
 
+const getProductById = async (
+  id: string
+): Promise<TypeProductDetailItem | null> => {
+  try {
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+      },
+      body: JSON.stringify({
+        query: gqlProductByIdQuery,
+        variables: { productId: id },
+      }),
+    });
+
+    const body = (await response.json()) as {
+      data: DetailProductResponse;
+    };
+
+    const responseProduct = body.data.product;
+
+    const product: TypeProductDetailItem = {
+      id: id,
+      name: responseProduct.name,
+      images: responseProduct.imagesCollection.items.map((item) => item.url),
+      price: responseProduct.price,
+      currencyCode: responseProduct.currencyCode,
+      listed: responseProduct.listed,
+      description: responseProduct.description,
+      categories: responseProduct.categoriesCollection.items.map((c) => c),
+      heroImage: responseProduct.heroImage.url,
+    };
+
+    return product;
+  } catch (error) {
+    console.log(error);
+
+    return null;
+  }
+};
+
 const contentfulService = {
   getAllProducts,
   getAllCategories,
+  getProductById,
 };
 
 export default contentfulService;
