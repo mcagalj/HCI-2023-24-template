@@ -53,6 +53,25 @@ const gqlProductByIdQuery = `query GetProductById($productId: String!) {
         url
       }
     }
+    richTextDescription {
+      json
+      links {
+        entries {
+          __typename
+          block {
+            sys {
+              id
+            }
+            ... on CodeBlockSection {
+              __typename
+              title
+              language
+              content
+            }
+          }
+        }
+      }
+    }
   }
 }
 `;
@@ -206,6 +225,7 @@ const getProductById = async (
       id: id,
       name: responseProduct.name,
       images: responseProduct.imagesCollection.items.map((item) => item.url),
+      richTextDescription: responseProduct.richTextDescription,
       price: responseProduct.price,
       currencyCode: responseProduct.currencyCode,
       listed: responseProduct.listed,
