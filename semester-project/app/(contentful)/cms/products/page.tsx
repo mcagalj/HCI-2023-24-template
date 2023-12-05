@@ -14,7 +14,8 @@ import { FC } from "react";
 import { TypeProductListItem } from "../../types/TypeProduct";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { products, categories } from "./productList";
+// import { products, categories } from "./productList";
+import contentfulService from "@/lib/contentfulClient";
 
 export interface HeroImageProps {
   productName: string;
@@ -80,6 +81,9 @@ const ProductCard: FC<TypeProductListItem> = ({
 );
 
 const CmsPage: FC<SearchParams> = async ({ searchParams }) => {
+  const products = await contentfulService.getAllProducts();
+  const categories = await contentfulService.getAllCategories();
+
   const filteredProducts = searchParams._category
     ? products.filter((product) => {
         return product.categories?.some((category) => {
