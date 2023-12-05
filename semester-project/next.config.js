@@ -8,6 +8,7 @@ const nextConfig = {
       "via.placeholder.com",
       "unsplash.com",
       "source.unsplash.com",
+      "images.ctfassets.net",
     ],
   },
 };
